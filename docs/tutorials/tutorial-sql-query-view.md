@@ -24,27 +24,29 @@ sidebar_label: "Use Query view"
   -->
 
 
-This tutorial demonstrates some useful features of the Query view in Apache Druid.
+This tutorial demonstrates some useful features built into Query view in Apache Druid.
 
 You can use the Query view to ingest and query data. You can also use it to test and tune queries before you use them in API requests&mdash;for example, to perform [SQL-based ingestion](../multi-stage-query/api.md).
 
-The tutorial guides you through the steps to ingest sample data, and query the ingested data using some Query view features.
+The tutorial guides you through the steps to ingest sample data, and query the ingested data using some Query view features. Try out the [Introduction to Druid SQL](./tutorial-jupyter-index.md#tutorials) tutorial to learn more about Druid SQL.
 
 ## Prerequisites
 
-Before you follow the steps in this tutorial, download Druid as described in the [quickstart](./index.md) using the [micro-quickstart](../operations/single-server.md#micro-quickstart-4-cpu-16gib-ram) single-machine configuration and have it running on your local machine. You don't need to have loaded any data.
+Before you follow the steps in this tutorial, download Druid as described in the [quickstart](./index.md) and have it running on your local machine. You don't need to have loaded any data.
 
 ## Run a demo query to ingest data
 
-In this section you load the demo queries that are included in Druid, and run a SQL task to ingest sample data into a datasource.
+Druid includes demo queries that each demonstrate a different Druid feature&mdash;for example transforming data during ingestion and sorting ingested data. Each query has detailed comments to help you learn more.
+
+In this section you load the demo queries and run a SQL task to ingest sample data into a [table-type datasource](../querying/datasource.md#table).
 
 1. Navigate to the Druid console at [http://localhost:8888](http://localhost:8888) and click **Query**.
 
-2. Click the ellipsis icon at the bottom of the query window and select **Load demo queries**. Note that loading the demo queries replaces all of your current query tabs. The demo queries load in several query tabs:
+2. Click the ellipsis at the bottom of the query window and select **Load demo queries**. Note that loading the demo queries replaces all of your current query tabs. The demo queries load in several tabs:
 
    ![demo queries](../assets/tutorial-sql-demo-queries.png)
 
-3. Click the **Demo 1** tab. This query ingests sample data into a datasource called **kttm_simple**. Click the **Demo 1** tab heading again and note the options&mdash;you can rename, copy and duplicate tabs.
+3. Click the **Demo 1** tab. This query ingests sample data into a datasource called **kttm_simple**. Click the **Demo 1** tab heading again and note the options&mdash;you can rename, copy, and duplicate tabs.
 
 4. Click **Run** to ingest the data.
 
@@ -66,7 +68,9 @@ In this section you run some queries against the new datasource and perform some
 
 ## Run aggregate queries
 
-In this section you run some aggregate queries and perform some operations on the query results.
+[Aggregate functions](../querying/sql-aggregations.md) allow you to perform a calculation on a set of values and return a single value.
+
+In this section you run some queries using aggregate functions and perform some operations on the results, using shortcut features designed to help you build your query.
 
 1. Open a new query tab.
 
@@ -80,7 +84,7 @@ In this section you run some aggregate queries and perform some operations on th
 
    ![count distinct](../assets/tutorial-sql-count-distinct.png)
 
-5. Click **Aggregate > COUNT(DISTINCT country)** to add this clause to the query, then run the updated query:
+5. Click **Aggregate > COUNT(DISTINCT "country")** to add this clause to the query, then run the updated query:
 
    ![aggregate-query](../assets/tutorial-sql-aggregate-query.png)
 
@@ -90,8 +94,7 @@ In this section you run some aggregate queries and perform some operations on th
 
 7. The Query view can provide information about a function, in case you aren't sure exactly what it does.
 
-   Replace the query line `COUNT(DISTINCT country) AS dist_country` with `COUNT(DISTINCT)`. 
-   <br>A help dialog for the function displays:
+   Delete the contents of the query line `COUNT(DISTINCT country) AS dist_country` and type `COUNT(DISTINCT)` to replace it. A help dialog for the function displays:
 
    ![count distinct help](../assets/tutorial-sql-count-distinct-help.png)
 
@@ -99,7 +102,7 @@ In this section you run some aggregate queries and perform some operations on th
 
 8. You can also perform actions on calculated columns in the results pane.
 
-   Click the results column heading **dist_country COUNT(DISTINCT country)** to see the available options:
+   Click the results column heading **dist_country COUNT(DISTINCT "country")** to see the available options:
 
    ![result columns actions](../assets/tutorial-sql-result-column-actions.png)
 
@@ -107,7 +110,9 @@ In this section you run some aggregate queries and perform some operations on th
 
 ## Generate an explain plan
 
-In this section you generate an explain plan for a query. An explain plan shows the full query details and all of the operations Druid will perform to execute it.
+In this section you generate an explain plan for a query. An explain plan shows the full query details and all of the operations Druid performs to execute it. 
+
+Druid optimizes queries of certain [types](../querying/sql-translation.md#query-types)&mdash;see [SQL query translation](../querying/sql-translation.md) for information on how to interpret an explain plan and use the details to improve query performance.
 
 1. Open a new query tab.
 
@@ -115,7 +120,7 @@ In this section you generate an explain plan for a query. An explain plan shows 
 
 3. Click **SELECT * FROM kttm_simple** and run the query.
 
-4. Click the ellipsis icon at the bottom of the query window and select **Explain SQL query**. The query plan opens in a new window:
+4. Click the ellipsis at the bottom of the query window and select **Explain SQL query**. The query plan opens in a new window:
 
    ![query plan](../assets/tutorial-sql-query-plan.png)
 
@@ -131,7 +136,7 @@ In this section you try out a few more useful Query view features.
 
 ### Use calculator mode
 
-Queries without a FROM clause run in calculator mode&mdash;this can be useful to help you understand how functions work.
+Queries without a FROM clause run in calculator mode&mdash;this can be useful to help you understand how functions work. See the [Druid SQL functions](../querying/sql-functions.md) reference for more information.
 
 1. Open a new query tab and enter the following:
    `SELECT SQRT(49)`
@@ -149,7 +154,7 @@ You can download query results in CSV, TSV, or newline-delimited JSON format.
 
 ### View query history
 
-In any query tab, click the ellipsis icon at the bottom of the query window and select **Query history**. 
+In any query tab, click the ellipsis at the bottom of the query window and select **Query history**. 
 
 You can click the links on the left to view queries run at a particular date and time, and open a previously run query in a new query tab.
 
