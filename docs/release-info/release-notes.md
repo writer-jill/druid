@@ -212,7 +212,6 @@ Improved lookup performance for queries that use the MSQ task engine by only loa
 - You can now pass a custom `DimensionSchema` map to MSQ query destination of type `DataSourceMSQDestination` instead of using the default values [#16864](https://github.com/apache/druid/pull/16864)
 -  Fixed the calculation of suggested memory in `WorkerMemoryParameters` to account for `maxConcurrentStages` which improves the accuracy of error messages [#17108](https://github.com/apache/druid/pull/17108)
 - Optimized the row-based frame writer to reduce failures when writing larger single rows to frames [#17094](https://github.com/apache/druid/pull/17094)
-- You can now configure encoding method for sketches at query time (#17050)[https://github.com/apache/druid/pull/17050]
 
 ### Streaming ingestion
 
@@ -296,6 +295,8 @@ Added the following fields from the query-based ingestion task report to the res
 - Updated window functions to disallow multi-value dimensions for partitioning [#17036](https://github.com/apache/druid/pull/17036)
 - Fixed an issue with casting objects to vector expressions [#17148](https://github.com/apache/druid/pull/17148)
 - Added several fixes and improvements to vectorization fallback [#17098](https://github.com/apache/druid/pull/17098), [#17162](https://github.com/apache/druid/pull/17162)
+- You can now configure encoding method for sketches at query time [#17050]([)https://github.com/apache/druid/pull/17050)
+- Fixed an issue with joins failing to time out on Historicals [#17099](https://github.com/apache/druid/pull/17099)
 
 ### Cluster management
 
