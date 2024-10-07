@@ -153,6 +153,7 @@ The web console now supports the Kinesis input format.
 - Added the ability to initiate handoff for a supervisor [#16586](https://github.com/apache/druid/pull/16586)
 - Added an option to `Use concurrent locks` and moved all insert and replace options to a separate submenu [#16899](https://github.com/apache/druid/pull/16899)
 - Added Delta snapshot version [#17023](https://github.com/apache/druid/pull/17023)
+- Added the Delta tile to the data loader for SQL-based batch and classic batch ingestion methods [#17160](https://github.com/apache/druid/pull/17160)
 - Improved how the web console detects durable storage [#16493](https://github.com/apache/druid/pull/16493)
 - Made the following web console improvements:
   - Added titles to action menus
@@ -177,8 +178,13 @@ The web console now supports the Kinesis input format.
 - Renamed `TaskStorageQueryAdapter` to `TaskQueryTool` and removed the `isAudited` method [#16750](https://github.com/apache/druid/pull/16750)
 - Improved Overlord performance by reducing redundant calls in SQL statements [#16839](https://github.com/apache/druid/pull/16839)
 - Improved `CustomExceptionMapper` so that it returns a correct failure message [#17016](https://github.com/apache/druid/pull/17016)
+- Improved time filtering in subqueries and non-table data sources [#17173](https://github.com/apache/druid/pull/17173)
+- Improved `WindowOperatorQueryFrameProcessor` to avoid unnecessary re-runs [#17211](https://github.com/apache/druid/pull/17211)
+- Improved memory management by dividing the amount of `partitionStatsMemory` by two to account for two simultaneous statistics collectors [#17216](https://github.com/apache/druid/pull/17216)
 - Fixed NPE in `CompactSegments` [#16713](https://github.com/apache/druid/pull/16713)
 - Fixed Parquet reader to ensure that Druid reads the required columns for a filter from the Parquet data files [#16874](https://github.com/apache/druid/pull/16874)
+- Fixed a distinct sketches issue where Druid called `retainedKeys.firstKey()` twice when adding another sketch [#17184](https://github.com/apache/druid/pull/17184)
+- Fixed an issue in the `WindowOperatorQueryFrameProcessor` where the frame writer's capacity could get reached for larger queries, causing it to not output all of the result rows [#17209](https://github.com/apache/druid/pull/17209)
 
 ### SQL-based ingestion
 
@@ -196,9 +202,12 @@ Improved lookup performance for queries that use the MSQ task engine by only loa
 
 #### Other SQL-based ingestion improvements
 
+- Added the ability to use `useConcurrentLocks` in task context to determine task lock type [#17193](https://github.com/apache/druid/pull/17193)
 - Reduced memory usage when transferring sketches between the MSQ task engine controller and worker [#16269](https://github.com/apache/druid/pull/16269)
 - Improved error handling when retrieving Avro schemas from registry [#16684](https://github.com/apache/druid/pull/16684)
 - Fixed issues related to partitioning boundaries in the MSQ task engine's window functions [#16729](https://github.com/apache/druid/pull/16729)
+- Fixed a boost column issue causing quantile sketches to incorrectly estimate the number of output partitions to create [#17141](https://github.com/apache/druid/pull/17141)
+- Fixed an issue with `ScanQueryFrameProcessor` cursor build not adjusting intervals [#17168](https://github.com/apache/druid/pull/17168)
 - Updated logic to fix incorrect query results for comparisons involving arrays [#16780](https://github.com/apache/druid/pull/16780)
 - You can now pass a custom `DimensionSchema` map to MSQ query destination of type `DataSourceMSQDestination` instead of using the default values [#16864](https://github.com/apache/druid/pull/16864)
 
@@ -264,6 +273,7 @@ Added the following fields from the query-based ingestion task report to the res
 - Added the ability to define the segment granularity of a table in the catalog [#16680](https://github.com/apache/druid/pull/16680)
 - Added a way for columns to provide `GroupByVectorColumnSelectors`, which controls how the groupBy engine operates on them [#16338](https://github.com/apache/druid/pull/16338)
 - Added `sqlPlannerBloat` query context parameter to control whether two project operators get merged when inlining expressions [#16248](https://github.com/apache/druid/pull/16248)
+- Added `enableRACOverWire` query context parameter to enable transfer of RACs over wire [#17150](https://github.com/apache/druid/pull/17150)
 - Improved window function offsets for `ArrayListRowsAndColumns` [#16718](https://github.com/apache/druid/pull/16718)
 - Improved the fallback strategy when the Broker is unable to materialize the subquery's results as frames for estimating the bytes [#16679](https://github.com/apache/druid/pull/16679)
 - Improved how Druid executes queries that contain a LIMIT clause [#16643](https://github.com/apache/druid/pull/16643)
@@ -274,6 +284,7 @@ Added the following fields from the query-based ingestion task report to the res
 - Improved numeric aggregations so that Druid now coerces complex types to number when possible, such as for `SpectatorHistogram` [#16564](https://github.com/apache/druid/pull/16564)
 - Improved query filtering to correctly process cases where both an IN expression and an equality (`=`) filter are applied to the same string value [#16597](https://github.com/apache/druid/pull/16597)
 - Improved the speed of SQL IN queries that use the SCALAR_IN_ARRAY function [#16388](https://github.com/apache/druid/pull/16388)
+- Improved the ARRAY_TO_MV function to handle cases where an object selector encounters a multi-value string [#17162](https://github.com/apache/druid/pull/17162)
 - Updated the deserialization of dimensions in GROUP BY queries to operate on all dimensions at once rather than deserializing individual dimensions [#16740](https://github.com/apache/druid/pull/16740)
 - Fixed an issue that caused `maxSubqueryBytes` to fail when segments had missing columns [#16619](https://github.com/apache/druid/pull/16619)
 - Fixed an issue with the array type selector that caused the array aggregation over window frame to fail [#16653](https://github.com/apache/druid/pull/16653)
