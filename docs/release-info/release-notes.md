@@ -491,12 +491,6 @@ You can now optionally use the `caseSensitive` Boolean config to configure how D
 
 [#16496](https://github.com/apache/druid/pull/16496)
 
-#### Iceberg REST catalog support
-
-Adds support to the `iceberg` input source to read from Iceberg REST catalogs.
-
-[#17124](https://github.com/apache/druid/pull/17124)
-
 #### Improved Deltalake input source support
 
 Added support for delta structs, arrays, and maps to the `delta` input source. 
