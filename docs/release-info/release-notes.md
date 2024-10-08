@@ -154,6 +154,7 @@ Other changes to the Explore view include the following:
 - Added the ability to hide all null columns in the record table
 - Added the ability to declare certain parameter values as sticky
 - Added the ability to expand a nested column into is constituent paths
+- Added the ability to explore on top of an aribtary source query 
 - Fixed dragging of a VARCHAR column to a measure control
 - Fixed filtering on a predefined measure
 - Fixed drag over indicator not clearing
@@ -161,7 +162,7 @@ Other changes to the Explore view include the following:
 - Fixed AS "t" was not always added in the grouping table query
 - Fixed AGGREGATE function not being evaluated if it was in an ORDER BY
 
-[#17213](https://github.com/apache/druid/pull/17213) [#17225](https://github.com/apache/druid/pull/17225) [#17234](https://github.com/apache/druid/pull/17234)
+[#17213](https://github.com/apache/druid/pull/17213) [#17225](https://github.com/apache/druid/pull/17225) [#17234](https://github.com/apache/druid/pull/17234) [#17180](https://github.com/apache/druid/pull/17180)
 
 #### Support Kinesis input format
 
@@ -175,6 +176,7 @@ The web console now supports the Kinesis input format.
 - You can now display both raw and formatted JSON in tables, making the data easier to read and troubleshoot [#16632](https://github.com/apache/druid/pull/16632)
 - You can now configure the maximum number of tasks through a menu [#16991](https://github.com/apache/druid/pull/16991)
 - You can now specify the Delta snapshot version in the web console [#17023](https://github.com/apache/druid/pull/17023)
+- Added a column for CPU counters in the query stages detail view when they are present. Also added tooltips to expose potentially hidden data like CPU time [#17132](https://github.com/apache/druid/pull/17132)
 - Added hooks to customize the workbench view [#16749](https://github.com/apache/druid/pull/16749)
 - Added the ability to hide workbench view toolbar in the **Query** view [#16785](https://github.com/apache/druid/pull/16785)
 - Added the ability to submit a suspended supervisor using the SQL data loader [#16696](https://github.com/apache/druid/pull/16696)
@@ -185,12 +187,14 @@ The web console now supports the Kinesis input format.
 - Added Delta snapshot version [#17023](https://github.com/apache/druid/pull/17023)
 - Added the Delta tile to the data loader for SQL-based batch and classic batch ingestion methods [#17160](https://github.com/apache/druid/pull/17160)
 - Improved how the web console detects durable storage [#16493](https://github.com/apache/druid/pull/16493)
+- Added a graph visualization to illustrate the flow of query stages [#17135](https://github.com/apache/druid/pull/17135)
 - Made the following web console improvements:
   - Added titles to action menus
   - Improved the query-based ingestion counter calculation
   - Removed the filter clause on `__time`
   - Fixed scrolling in the `loadRules` editor [#16735](https://github.com/apache/druid/pull/16735)
 - Restored the default WHERE filter to auto-generated SQL queries [#16608](https://github.com/apache/druid/pull/16608)
+- Updated the Web Console to use array mode for schema discovery [#17133](https://github.com/apache/druid/pull/17133)
 - Fixed NPE due to null values in numeric columns [#16760](https://github.com/apache/druid/pull/16760)
 
 ### Ingestion
@@ -321,7 +325,6 @@ Added the following fields from the query-based ingestion task report to the res
 - Added the ability to define the segment granularity of a table in the catalog [#16680](https://github.com/apache/druid/pull/16680)
 - Added a way for columns to provide `GroupByVectorColumnSelectors`, which controls how the groupBy engine operates on them [#16338](https://github.com/apache/druid/pull/16338)
 - Added `sqlPlannerBloat` query context parameter to control whether two project operators get merged when inlining expressions [#16248](https://github.com/apache/druid/pull/16248)
-- Added `enableRACOverWire` query context parameter to enable transfer of RACs over wire [#17150](https://github.com/apache/druid/pull/17150)
 - Improved window function offsets for `ArrayListRowsAndColumns` [#16718](https://github.com/apache/druid/pull/16718)
 - Improved the fallback strategy when the Broker is unable to materialize the subquery's results as frames for estimating the bytes [#16679](https://github.com/apache/druid/pull/16679)
 - Improved how Druid executes queries that contain a LIMIT clause [#16643](https://github.com/apache/druid/pull/16643)
@@ -333,6 +336,7 @@ Added the following fields from the query-based ingestion task report to the res
 - Improved query filtering to correctly process cases where both an IN expression and an equality (`=`) filter are applied to the same string value [#16597](https://github.com/apache/druid/pull/16597)
 - Improved the speed of SQL IN queries that use the SCALAR_IN_ARRAY function [#16388](https://github.com/apache/druid/pull/16388)
 - Improved the ARRAY_TO_MV function to handle cases where an object selector encounters a multi-value string [#17162](https://github.com/apache/druid/pull/17162)
+- Improved query filtering so that Druid tries to arrange query filters based on the computational cost of bitmap indexes, prioritizing less expensive filters for computation first. Filters with high compute costs relative to the number of rows they can filter might be omitted. [#17055](https://github.com/apache/druid/pull/17055)
 - Updated the deserialization of dimensions in GROUP BY queries to operate on all dimensions at once rather than deserializing individual dimensions [#16740](https://github.com/apache/druid/pull/16740)
 - Fixed an issue that caused `maxSubqueryBytes` to fail when segments had missing columns [#16619](https://github.com/apache/druid/pull/16619)
 - Fixed an issue with the array type selector that caused the array aggregation over window frame to fail [#16653](https://github.com/apache/druid/pull/16653)
