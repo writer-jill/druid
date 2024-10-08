@@ -194,7 +194,7 @@ The web console now supports the Kinesis input format.
   - Removed the filter clause on `__time`
   - Fixed scrolling in the `loadRules` editor [#16735](https://github.com/apache/druid/pull/16735)
 - Restored the default WHERE filter to auto-generated SQL queries [#16608](https://github.com/apache/druid/pull/16608)
-- Updated the Web Console to use array mode for schema discovery [#17133](https://github.com/apache/druid/pull/17133)
+- Updated the Web Console to use array mode by default for schema discovery [#17133](https://github.com/apache/druid/pull/17133)
 - Fixed NPE due to null values in numeric columns [#16760](https://github.com/apache/druid/pull/16760)
 
 ### Ingestion
