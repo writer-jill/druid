@@ -110,19 +110,23 @@ See the [Upgrade notes](#upgrade-notes) for more information about the following
 This section contains detailed release notes separated by areas.
 
 ### Web console
+
 #### Improvments to the stages display
+
 A number of improvements have been made to the query stages visualization
-![new_stages.png]
+![new_stages.png](web-console-31-rn-new_stages.png)
 These changes include:
 - Added a graph visualization to illustrate the flow of query stages [#17135](https://github.com/apache/druid/pull/17135)
 - Added a column for CPU counters in the query stages detail view when they are present. Also added tooltips to expose potentially hidden data like CPU time [#17132](https://github.com/apache/druid/pull/17132)
+
 #### Dart
 Added the ability to detect the presense of the Dart engine and to run Dart queries from the console as well as to see currently running Dart queries.
-![dart.png]
+![dart.png](web-console-31-rn-dart.png)
 [#17147](https://github.com/apache/druid/pull/17147)
+
 #### Copy query results as SQL
 You can now copy the results of a query as a Druid SQL statement: 
-![](31.0_copy_results_as_sql.png)
+![](web-console-31-rn-copy-results-as-sql.png)
 When you copy the results of the pictured query, you get the following query:
 ```sql
 SELECT
@@ -149,6 +153,7 @@ You can now configure the Explore view on top of a source query instead of only 
 You can also point and click to edit the source query, store measures in the source query,
 and return to the state of your view using stateful URLs.
 [#17180](https://github.com/apache/druid/pull/17180)
+
 Other changes to the Explore view include the following:
 - Added the ability to define expressions and measures on the fly
 - Added the ability to hide all null columns in the record table
