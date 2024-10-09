@@ -124,6 +124,7 @@ Added the ability to detect the presense of the Dart engine and to run Dart quer
 ![dart.png](web-console-31-rn-dart.png)
 [#17147](https://github.com/apache/druid/pull/17147)
 
+
 #### Copy query results as SQL
 You can now copy the results of a query as a Druid SQL statement: 
 ![](web-console-31-rn-copy-results-as-sql.png)
